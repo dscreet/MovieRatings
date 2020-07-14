@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+		<title>Results</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+			integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="./style.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+
+	<body>
+		<nav class="bg">
+        	<ul class="nav-bar">
+				<li id="siteName">
+					<a id="white" href="/">Movie Ratings</a>
+				</li>
+				<li>
+					<div class="input-container">
+						<form action="/searchresults" method="get">
+							<input class="effect-1" type="text" name="search" placeholder="Search movies, TV, more...">
+							<button type="submit" class="fa fa-search form-control-feedback"></button>
+							<span class="focus-border"></span>
+						</form>
+					</div>
+				</li>
+			</ul>
+		</nav>
+		<div class="container">
+
+			<% var imdb_url = 'https://www.imdb.com/title/' + data.imdbID %>
+
+			<% if (data.Poster != 'N/A') { %>
+				<div id="posterGrid">
+					<a href="<%=imdb_url %>"><img id="Poster" src="<%= data.Poster %>" alt=""></a>
+				</div>
+			<div id="titleplotratingsGrid"> <!-- If we have a poster, we need this to align everything. -->
+					
+			<!-- If there is no poster for the movie, no need to align. -->	
+			<% } else { %>
+			<div>
+			<% } %>
+
+			<div id="titleplotGrid">
+	
+				<a href="<%=imdb_url %>"><span id="Title"><%= data.Title %> </br> <%= " (" +  data.Year + ")" %></span></a>
+
+				<% if (data.Plot != 'N/A') { %>
+					<span id="Plot"><%= data.Plot %></span>
+
+				<% } else { %>
+					<span id="Plot"><%= "Plot is " + data.Plot %></span>
+				<% } %>
+			</div>
+
+			<div id="ratingsGrid">
+				<!-- Images for the ratings. -->
+				<span id="imdb"><img src="/images/imdb.png" height="60em"></span>
+				<span id="rt"><img src="/images/rt.png" height="60em"></span>
+				<span id="mc"><img src="/images/mc.png" height="60em"></span>
+				<span id="x"><img src="/images/mine.png" height="60em"></span>
+			
+				<!-- Format for posting the ratings from omdb api - depending on which ratings are available. -->
+				<% if (data.Ratings.length >= 1) { %>
+					<span>IMDb: <%=data.Ratings[0]['Value'] %></span>
+		
+					<% if (data.Ratings.length == 2) { %>
+		
+						<% if (data.Metascore != 'N/A') { %>
+							<span>N/A</span>
+							<span><%= data.Ratings[1]['Source'] + ': ' + data.Ratings[1]['Value'] %></span>
+
+						<% } else { %>
+							<span><%= data.Ratings[1]['Source'] + ': ' + data.Ratings[1]['Value'] %></span>
+							<span>N/A</span>	
+						<% } %>	
+	
+					<% } else if (data.Ratings.length == 3) { %>
+						<span><%= data.Ratings[1]['Source'] + ': ' + data.Ratings[1]['Value'] %></span>
+						<span><%= data.Ratings[2]['Source'] + ': ' + data.Ratings[2]['Value'] %></span>
+				
+					<% } else { %>
+						<span>N/A</span>
+						<span>N/A</span>
+					<% } %>
+	
+				<% } else { %>
+					<span>N/A</span>
+					<span>N/A</span>
+					<span>N/A</span>
+				<% } %>
+	
+				<!-- If I have a rating for the movie, display it. -->
+				<%if (data.hasOwnProperty('rating')) { %>	
+					<span><%= 'My rating: ' + data.rating + '%' %> </br> <%= 'Sample size: ' + data.sampleSize %> </br> <%= 'Last updated: ' + data.updatedAt.toISOString().replace(/T.*/,'').split('-').reverse().join('-'); %></span>	
+				
+				<% } else { %>	
+					<span>N/A</span>
+				<% } %>
+			</div>
+			</div>
+			</div>
+		</div>
+		<footer>
+			© 2020 by Mehmet Keven
+		</footer>
+	</body>
+
+</html>

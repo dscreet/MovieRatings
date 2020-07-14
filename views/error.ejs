@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<title>Error</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+			integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="./style.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+	
+	<body>
+		<nav class="bg">
+			<ul class="nav-bar">
+				<li id="siteName">
+					<a id="white" href="/">Movie Ratings</a>
+				</li>
+				<li>
+					<div class="input-container">
+						<form action="/searchresults" method="get">
+							<input class="effect-1" type="text" name="search" placeholder="Search movies, TV, more...">
+							<button type="submit" class="fa fa-search form-control-feedback"></button>
+							<span class="focus-border"></span>
+						</form>
+					</div>
+				</li>
+			</ul>
+		</nav>
+		<div class="container">
+			<div class="table-container alignError">
+				<h3>No results found for "<%= query %>"</h3>
+			</div>
+		</div>
+		<footer>
+			© 2020 by Mehmet Keven
+		</footer>
+	</body>
+
+</html>

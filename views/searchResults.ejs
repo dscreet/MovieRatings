@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Search results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body>
+	  <nav class="bg">
+      <ul class="nav-bar">
+        <li id="siteName">
+          <a id="white" href="/">Movie Ratings</a>
+        </li>
+			  <li>
+          <div class="input-container">
+            <form action="/searchresults" method="get">
+              <input class="effect-1" type="text" name="search" placeholder="Search movies, TV, more...">
+              <button type="submit" class="fa fa-search form-control-feedback"></button>
+              <span class="focus-border"></span>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <div class="container">
+      <div class="table-container">
+        <table id="resultsTable">
+          <caption><h3>Results for "<%= query %>"</h3></caption>
+          
+        <!-- Lists all the search results in a table. -->
+          <% data['Search'].forEach(function(movie){ %>
+            <tr>
+              <% var imdb_url = 'https://www.imdb.com/title/' + movie['imdbID'] %>
+              <% var res_url = 'http://localhost:5000/results?search=' + movie['imdbID'] %>
+              
+              <%if (movie['Poster'] != 'N/A') { %>
+                <td><a href="<%= res_url %>"><img src="<%= movie['Poster'] %>" alt="" width="75em"></a></td>
+
+              <!-- If the movie doesn't have a poster, use the N/A image. -->  
+              <% } else { %>
+                <td><a href="<%= res_url %>"><img src="/images/na.png" alt="" width="75em"></a></td>
+              <% } %>
+              
+              <td class="alignTableText"><a href="<%= res_url %>"><%= movie['Title'] + " (" + movie['Year'] + ")" %></a></td>
+            </tr>
+          <% }) %>
+
+        </table>
+      </div>
+    </div>
+    <footer>
+      <span>© 2020 by Mehmet Keven</span>
+    </footer>
+  </body>
+
+</html>
